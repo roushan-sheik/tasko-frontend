@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import {
   Eye,
   EyeOff,
@@ -12,21 +13,23 @@ import {
   Database,
   Loader,
 } from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { resetPasswordSchema } from "@/schemas/resetPassword.schema";
-
-// Validation schema
+import { useResetPassword } from "@/hooks/useAuth";
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
 const ResetPassword = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const resetPasswordMutation = useResetPassword();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
+    reset,
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
@@ -38,23 +41,25 @@ const ResetPassword = () => {
 
   const onSubmit = async (data: ResetPasswordFormData) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Note: In a real app, you would get the userId from somewhere (like URL params, auth context, etc.)
+      // For now, assuming we have user ID available somehow
+      const userId = "current-user-id"; // This should come from your auth context or URL params
 
-      console.log("Reset password data:", data);
-      toast.success(
-        "Password reset successful! You can now log in with your new password.",
-        {
-          position: "top-center",
-          autoClose: 4000,
-        }
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
-      toast.error("Password reset failed. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
+      await resetPasswordMutation.mutateAsync({
+        userId,
+        newPassword: data.newPassword,
       });
+
+      // Reset form after successful password reset
+      reset();
+
+      // Redirect to login page after successful reset
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error) {
+      // Error is handled in the mutation
+      console.error("Reset password error:", error);
     }
   };
 
@@ -101,7 +106,7 @@ const ResetPassword = () => {
                 htmlFor="email"
                 className="block text-body3 font-medium text-[color:var(--color-neutral-700)] mb-2"
               >
-                Email Adders
+                Email Address
               </label>
               <input
                 {...register("email")}
@@ -202,10 +207,10 @@ const ResetPassword = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={resetPasswordMutation.isPending}
               className="w-full cursor-pointer bg-[color:var(--color-brand-500)] text-white py-3 px-4 rounded-lg text-body2 font-semibold hover:bg-[color:var(--color-brand-600)] focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center gap-2"
             >
-              {isSubmitting ? (
+              {resetPasswordMutation.isPending ? (
                 <>
                   <Loader className="h-4 w-4 animate-spin" />
                   Resetting Password...
