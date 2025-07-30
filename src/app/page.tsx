@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckSquare, TrendingUp, FolderOpen, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const HomePage = () => {
   return (
@@ -20,13 +21,17 @@ const HomePage = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
-            <button className="cursor-pointer group bg-[color:var(--color-brand-500)] text-white px-8 py-4 rounded-lg text-body1 font-semibold hover:bg-[color:var(--color-brand-600)] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2 w-full sm:w-auto">
-              GET STARTED
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
-            </button>
-            <button className="cursor-pointer bg-white text-[color:var(--color-brand-500)] px-8 py-4 rounded-lg text-body1 font-semibold border-2 border-[color:var(--color-brand-500)] hover:bg-[color:var(--color-brand-50)] transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto">
-              LOGIN
-            </button>
+            <Link href={"/login"}>
+              <button className="cursor-pointer group bg-[color:var(--color-brand-500)] text-white px-8 py-4 rounded-lg text-body1 font-semibold hover:bg-[color:var(--color-brand-600)] transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2 w-full sm:w-auto">
+                GET STARTED
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
+              </button>
+            </Link>
+            <Link href={"/login"}>
+              <button className="cursor-pointer bg-white text-[color:var(--color-brand-500)] px-8 py-4 rounded-lg text-body1 font-semibold border-2 border-[color:var(--color-brand-500)] hover:bg-[color:var(--color-brand-50)] transition-all duration-300 shadow-md hover:shadow-lg w-full sm:w-auto">
+                LOGIN
+              </button>
+            </Link>
           </div>
 
           {/* Feature Cards */}
