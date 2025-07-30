@@ -6,6 +6,7 @@ import {
   TaskFilters,
   UpdateTaskPayload,
   DeleteTaskResponse,
+  CreateTaskPayload, // Add this import
 } from "@/types/task";
 
 const API_BASE_URL = "http://localhost:5000/api/v1";
@@ -17,7 +18,7 @@ const apiClient = axios.create({
 
 // Add token to authorization header
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken"); // or wherever you store the token
+  const token = localStorage.getItem("accessToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -25,7 +26,18 @@ apiClient.interceptors.request.use((config) => {
 });
 
 export const taskService = {
-  // Get all tasks with filters
+  // Add this new method
+  createTask: async (
+    payload: CreateTaskPayload
+  ): Promise<SingleTaskResponse> => {
+    const { data } = await apiClient.post<SingleTaskResponse>(
+      "/tasks/",
+      payload
+    );
+    return data;
+  },
+
+  // Your existing methods
   getTasks: async (filters: TaskFilters = {}): Promise<TasksResponse> => {
     const params = new URLSearchParams();
 
@@ -42,13 +54,11 @@ export const taskService = {
     return data;
   },
 
-  // Get task by ID
   getTaskById: async (id: string): Promise<SingleTaskResponse> => {
     const { data } = await apiClient.get<SingleTaskResponse>(`/tasks/${id}`);
     return data;
   },
 
-  // Get tasks by category
   getTaskByCategory: async (category: string): Promise<TasksResponse> => {
     const { data } = await apiClient.get<TasksResponse>(
       `/tasks/category/${encodeURIComponent(category)}`
@@ -56,7 +66,6 @@ export const taskService = {
     return data;
   },
 
-  // Update task
   updateTask: async (
     id: string,
     payload: UpdateTaskPayload
@@ -68,7 +77,6 @@ export const taskService = {
     return data;
   },
 
-  // Delete task
   deleteTask: async (id: string): Promise<DeleteTaskResponse> => {
     const { data } = await apiClient.delete<DeleteTaskResponse>(`/tasks/${id}`);
     return data;

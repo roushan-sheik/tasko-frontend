@@ -66,3 +66,13 @@ export interface DeleteTaskResponse {
   success: boolean;
   message: string;
 }
+
+// Add this new interface - Remove any duplicate CreateTaskPayload interfaces
+export interface CreateTaskPayload {
+  title: string;
+  description: string;
+  category: Task["category"];
+  status: Task["status"];
+  endDate: string;
+  points: number;
+}

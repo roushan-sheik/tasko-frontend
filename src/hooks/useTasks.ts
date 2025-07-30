@@ -1,13 +1,37 @@
+// hooks/useTasks.ts
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { taskService } from "@/services/taskService";
-import { TaskFilters, UpdateTaskPayload } from "@/types/task";
-import { toast } from "sonner"; // or your preferred toast library
+import {
+  TaskFilters,
+  UpdateTaskPayload,
+  CreateTaskPayload,
+} from "@/types/task";
+import { toast } from "sonner";
 
+// Add this new hook
+export const useCreateTask = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (taskData: CreateTaskPayload) =>
+      taskService.createTask(taskData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      toast.success("Task created successfully!");
+    },
+    onError: (error) => {
+      toast.error("Failed to create task");
+      console.error("Create task error:", error);
+    },
+  });
+};
+
+// Your existing hooks
 export const useTasks = (filters: TaskFilters = {}) => {
   return useQuery({
     queryKey: ["tasks", filters],
     queryFn: () => taskService.getTasks(filters),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 };
 
@@ -34,7 +58,6 @@ export const useUpdateTask = () => {
     mutationFn: ({ id, payload }: { id: string; payload: UpdateTaskPayload }) =>
       taskService.updateTask(id, payload),
     onSuccess: (data, variables) => {
-      // Invalidate and refetch tasks
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["task", variables.id] });
       toast.success("Task updated successfully!");
@@ -52,7 +75,6 @@ export const useDeleteTask = () => {
   return useMutation({
     mutationFn: (id: string) => taskService.deleteTask(id),
     onSuccess: () => {
-      // Invalidate and refetch tasks
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       toast.success("Task deleted successfully!");
     },
