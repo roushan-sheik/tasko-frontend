@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Brand Colors */
+    --color-brand-50: #e6f9f2;
+    --color-brand-100: #b8f0da;
+    --color-brand-200: #8ae7c3;
+    --color-brand-300: #5cdeab;
+    --color-brand-400: #2ed594;
+    --color-brand-500: #00cc7d; /* Brand Color */
+    --color-brand-600: #00b76f;
+    --color-brand-700: #009b5e;
+    --color-brand-800: #007f4c;
+    --color-brand-900: #00633b;
+
+    /* Neutral Colors */
+    --color-neutral-50: #f8fafc;
+    --color-neutral-100: #f1f5f9;
+    --color-neutral-200: #e2e8f0;
+    --color-neutral-300: #cbd5e1;
+    --color-neutral-400: #94a3b8;
+    --color-neutral-500: #64748b;
+    --color-neutral-600: #475569;
+    --color-neutral-700: #334155;
+    --color-neutral-800: #1e293b;
+    --color-neutral-900: #0f172a;
+    --color-neutral-950: #020617;
+
+    /* Gray Scale */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+
+    --color-black: #000000;
+    --color-white: #ffffff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Typography Utilities with Colors */
+@layer components {
+  .text-display1 {
+    @apply text-[4.5rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+  .text-display2 {
+    @apply text-[4rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+  .text-display3 {
+    @apply text-[3.5rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+
+  .text-title2 {
+    @apply text-[3rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+  .text-title3 {
+    @apply text-[2.25rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+
+  .text-heading1 {
+    @apply text-[1.875rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+  .text-heading2 {
+    @apply text-[1.5rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+  .text-heading3 {
+    @apply text-[1.25rem] leading-[1.4] text-[color:var(--color-neutral-900)];
+  }
+
+  .text-body1 {
+    @apply text-[1.125rem] leading-[1.4] text-[color:var(--color-neutral-700)];
+  }
+  .text-body2 {
+    @apply text-[1rem] leading-[1.4] text-[color:var(--color-neutral-700)];
+  }
+  .text-body3 {
+    @apply text-[0.875rem] leading-[1.4] text-[color:var(--color-neutral-700)];
+  }
+
+  .text-caption1 {
+    @apply text-[0.75rem] leading-[1.4] text-[color:var(--color-neutral-500)];
+  }
+  .text-caption2 {
+    @apply text-[0.625rem] leading-[1.4] text-[color:var(--color-neutral-500)];
+  }
 }
