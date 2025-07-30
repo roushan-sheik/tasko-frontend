@@ -19,7 +19,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken"); // or wherever you store the token
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZzJAZ21haWwuY29tIiwiaWF0IjoxNzUzODU5MDYyLCJleHAiOjE3NTQxMTgyNjJ9.RAg53vzjcVv1Q23KZQeBfjwdfxlA8tbjcxDE2UQX8cM"}`;
   }
   return config;
 });
