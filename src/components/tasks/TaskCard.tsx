@@ -24,12 +24,13 @@ const getStatusColor = (status: Task["status"]) => {
   }
 };
 
-const getCategoryIcon = (category?: string) => {
-  const letter = category?.charAt(0)?.toUpperCase() || "?";
-
+const getCategoryIcon = (category: string) => {
+  // You can customize this based on your categories
   return (
     <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
-      <span className="text-white font-bold text-sm">{letter}</span>
+      <span className="text-white font-bold text-sm">
+        {category.charAt(0).toUpperCase()}
+      </span>
     </div>
   );
 };
@@ -60,12 +61,18 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
           </button>
         )}
       </div>
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <Calendar size={14} />
-        <span>
-          {task.endDate && !isNaN(new Date(task.endDate).getTime())
-            ? format(new Date(task.endDate), "EEEE, MMMM d - yyyy")
-            : "No due date"}
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2 text-sm text-gray-500">
+          <Calendar size={14} />
+          <span>{format(new Date(task.endDate), "EEEE, MMMM d - yyyy")}</span>
+        </div>
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(
+            task.status
+          )}`}
+        >
+          {task.status}
         </span>
       </div>
     </div>
