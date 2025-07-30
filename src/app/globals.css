@@ -90,3 +90,9 @@
     @apply text-[0.625rem] leading-[1.4] text-[color:var(--color-neutral-500)];
   }
 }
+.text_pri {
+  color: #00cc7d;
+}
+.bg_pri {
+  background: #00cc7d;
+}

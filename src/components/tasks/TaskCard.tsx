@@ -27,7 +27,7 @@ const getStatusColor = (status: Task["status"]) => {
 const getCategoryIcon = (category: string) => {
   // You can customize this based on your categories
   return (
-    <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
+    <div className="w-10 h-10 bg_pri rounded-full flex items-center justify-center">
       <span className="text-white font-bold text-sm">
         {category.charAt(0).toUpperCase()}
       </span>
@@ -39,23 +39,23 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-3">
-          {getCategoryIcon(task.category)}
-          <div>
-            <Link href={`/dashboard/${task._id}`}>
+        <Link href={`/dashboard/${task._id}`}>
+          <div className="flex items-center gap-3">
+            {getCategoryIcon(task.category)}
+            <div>
               <h3 className="font-semibold text-gray-900 hover:text-teal-600 cursor-pointer">
                 {task.title}
               </h3>
-            </Link>
-            <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-              {task.description}
-            </p>
+              <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                {task.description}
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
         {onDelete && (
           <button
             onClick={() => onDelete(task._id)}
-            className="text-red-500 hover:text-red-700 p-1"
+            className="text-red-500 cursor-pointer hover:text-red-700 p-1"
           >
             <Trash2 size={16} />
           </button>

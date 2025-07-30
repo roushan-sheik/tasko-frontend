@@ -65,7 +65,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ onAddTask }) => {
       {onAddTask && (
         <button
           onClick={onAddTask}
-          className="mt-4 flex items-center gap-2 px-6 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+          className="mt-4 flex items-center gap-2 cursor-pointer px-6 py-3 bg_pri text-white rounded-lg hover:bg-teal-800 transition-colors"
         >
           <Plus size={20} />
           Add New Task

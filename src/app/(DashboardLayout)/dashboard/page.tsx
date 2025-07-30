@@ -69,7 +69,7 @@ export default function AllTaskListPage() {
         <h1 className="text-2xl font-bold text-gray-900">All Task list</h1>
         <button
           onClick={handleAddNewTask}
-          className="flex items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg_pri text-white rounded-lg cursor-pointer hover:bg-teal-700 transition-colors"
         >
           <Plus size={20} />
           Add New Task
@@ -83,7 +83,7 @@ export default function AllTaskListPage() {
       {hasNoTasks ? (
         <EmptyState onAddTask={handleAddNewTask} />
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 pt-8">
           {tasks.map((task) => (
             <TaskCard key={task._id} task={task} onDelete={handleDeleteTask} />
           ))}
