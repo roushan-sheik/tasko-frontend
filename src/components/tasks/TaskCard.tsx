@@ -37,7 +37,7 @@ const getCategoryIcon = (category: string) => {
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <Link href={`/dashboard/${task._id}`}>
           <div className="flex items-center gap-3">

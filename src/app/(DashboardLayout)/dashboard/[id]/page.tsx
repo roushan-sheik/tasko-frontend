@@ -44,7 +44,7 @@ export default function TaskDetailsPage() {
 
   const getCategoryIcon = (category: string) => {
     return (
-      <div className="w-16 h-16 bg-teal-500 rounded-full flex items-center justify-center">
+      <div className="w-16 h-16 bg_pri rounded-full flex items-center justify-center">
         <span className="text-white font-bold text-lg">
           {category.charAt(0).toUpperCase()}
         </span>
@@ -113,7 +113,7 @@ export default function TaskDetailsPage() {
           </p>
           <button
             onClick={handleBack}
-            className="mt-4 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600"
+            className="mt-4 px-4 py-2 bg_pri text-white cursor-pointer rounded-lg hover:bg-teal-800"
           >
             Back to Tasks
           </button>
@@ -125,30 +125,28 @@ export default function TaskDetailsPage() {
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex lg:items-center flex-col  gap-2 lg:flex-row items-start justify-between mb-8">
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="lg:p-2 p-0 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <ArrowLeft size={20} />
           </button>
           <h1 className="text-2xl font-bold text-gray-900">Task Details</h1>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-teal-600 font-semibold">
-            {task.points} Points
-          </span>
+        <div className="flex items-center gap-4 ">
+          <span className="text_pri font-semibold">{task.points} Points</span>
           <button
             onClick={handleEdit}
-            className="flex items-center gap-2 px-4 py-2 text-orange-600 border border-orange-600 rounded-lg hover:bg-orange-50 transition-colors"
+            className="flex items-center cursor-pointer gap-2 px-4 py-2 text-orange-600 border border-orange-600 rounded-lg hover:bg-orange-50 transition-colors"
           >
             <Edit size={16} />
             Edit Task
           </button>
           <button
             onClick={handleBack}
-            className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+            className="px-4 py-2 bg_pri cursor-pointer text-white rounded-lg hover:bg-teal-600 transition-colors"
           >
             Back
           </button>
@@ -157,7 +155,7 @@ export default function TaskDetailsPage() {
 
       {/* Task Details Card */}
       <div className="bg-white rounded-lg border border-gray-200 p-8 mb-8">
-        <div className="flex items-start gap-6 mb-8">
+        <div className="flex flex-col lg:flex-row lg:items-start items-center gap-6 mb-8">
           {getCategoryIcon(task.category)}
           <div className="flex-1">
             <div className="flex items-start justify-between mb-4">
@@ -198,7 +196,7 @@ export default function TaskDetailsPage() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-center lg:justify-start">
         <button
           onClick={handleSubmit}
           disabled={
@@ -206,14 +204,14 @@ export default function TaskDetailsPage() {
             selectedStatus === task.status ||
             updateTaskMutation.isPending
           }
-          className="px-8 py-3 bg-teal-500 text-white rounded-lg hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-8 py-3 bg_pri cursor-pointer text-white rounded-lg hover:bg-teal-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {updateTaskMutation.isPending ? "Updating..." : "Submit"}
         </button>
         <button
           onClick={() => setShowDeleteModal(true)}
           disabled={deleteTaskMutation.isPending}
-          className="px-8 py-3 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-8 py-3 bg-red-100 text-red-600 cursor-pointer rounded-lg hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           {deleteTaskMutation.isPending ? "Deleting..." : "Delete Task"}
         </button>
