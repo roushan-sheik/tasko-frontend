@@ -1,11 +1,11 @@
+import DashboardHeader from "@/components/layout/DashboardHeader";
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <h3>Header</h3>
+      <DashboardHeader />
       <div>{children}</div>
-      <h2>Footer</h2>
     </div>
   );
 };
