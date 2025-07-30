@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import {
   Eye,
   EyeOff,
@@ -11,19 +12,23 @@ import {
   Users,
   Loader,
 } from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { loginSchema } from "@/schemas/login.schema";
+import { useLogin, useAuth } from "@/hooks/useAuth";
 import SectionContainer from "@/components/shared/SectionContainer";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const loginMutation = useLogin();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,24 +38,41 @@ const LoginPage = () => {
     },
   });
 
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated && !authLoading) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, authLoading, router]);
+
   const onSubmit = async (data: LoginFormData) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await loginMutation.mutateAsync({
+        email: data.email,
+        password: data.password,
+      });
 
-      console.log("Login data:", data);
-      toast.success("Login successful! Welcome back.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // Redirect to dashboard after successful login
+      router.push("/dashboard");
     } catch (error) {
-      toast.error("Login failed. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      // Error is handled in the mutation
+      console.error("Login error:", error);
     }
   };
+
+  // Show loading if checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-[color:var(--color-brand-500)]" />
+      </div>
+    );
+  }
+
+  // Don't render if already authenticated
+  if (isAuthenticated) {
+    return null;
+  }
 
   return (
     <div>
@@ -205,10 +227,10 @@ const LoginPage = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={authLoading}
                   className="w-full cursor-pointer bg-[color:var(--color-brand-500)] text-white py-3 px-4 rounded-lg text-body2 font-semibold hover:bg-[color:var(--color-brand-600)] focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? (
+                  {authLoading ? (
                     <>
                       <Loader className="h-4 w-4 animate-spin" />
                       Logging in...
