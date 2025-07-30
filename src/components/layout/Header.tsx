@@ -36,28 +36,6 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a
-              href="#features"
-              className="text-body2 text-white hover:text-[color:var(--color-brand-100)] transition-colors duration-200"
-            >
-              Features
-            </a>
-            <a
-              href="#pricing"
-              className="text-body2 text-white hover:text-[color:var(--color-brand-100)] transition-colors duration-200"
-            >
-              Pricing
-            </a>
-            <a
-              href="#about"
-              className="text-body2 text-white hover:text-[color:var(--color-brand-100)] transition-colors duration-200"
-            >
-              About
-            </a>
-          </nav>
-
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
             {!isLoggedIn ? (

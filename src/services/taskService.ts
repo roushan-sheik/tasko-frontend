@@ -8,8 +8,9 @@ import {
   DeleteTaskResponse,
   CreateTaskPayload, // Add this import
 } from "@/types/task";
+import { config } from "@/config";
 
-const API_BASE_URL = "http://localhost:5000/api/v1";
+const API_BASE_URL = config.baseUrl;
 
 // Create axios instance with interceptor for auth
 const apiClient = axios.create({

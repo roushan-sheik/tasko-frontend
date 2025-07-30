@@ -1,5 +1,6 @@
 "use client";
 
+import { config } from "@/config";
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 
 // Types
@@ -123,7 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const response = await fetch("http://localhost:5000/api/v1/auth/login", {
+      const response = await fetch(`${config.baseUrl}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,14 +143,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         localStorage.setItem("accessToken", result.data.accessToken);
 
         // Get user data
-        const userResponse = await fetch(
-          "http://localhost:5000/api/v1/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${result.data.accessToken}`,
-            },
-          }
-        );
+        const userResponse = await fetch(`${config.baseUrl}/auth/me`, {
+          headers: {
+            Authorization: `Bearer ${result.data.accessToken}`,
+          },
+        });
 
         const userResult = await userResponse.json();
 
@@ -186,16 +184,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       dispatch({ type: "SET_LOADING", payload: true });
 
-      const response = await fetch(
-        "http://localhost:5000/api/v1/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ fullName, email, password }),
-        }
-      );
+      const response = await fetch(`${config.baseUrl}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fullName, email, password }),
+      });
 
       const result = await response.json();
 
@@ -224,7 +219,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       dispatch({ type: "SET_LOADING", payload: true });
 
       const response = await fetch(
-        `http://localhost:5000/api/v1/auth/reset-password/${userId}`,
+        `${config.baseUrl}/auth/reset-password/${userId}`,
         {
           method: "PATCH",
           headers: {
@@ -256,7 +251,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const token = localStorage.getItem("accessToken");
 
       if (token) {
-        await fetch("http://localhost:5000/api/v1/auth/logout", {
+        await fetch(`${config}/auth/logout`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,

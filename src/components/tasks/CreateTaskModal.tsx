@@ -48,6 +48,7 @@ export default function CreateTaskModal({
 
       await createTaskMutation.mutateAsync(payload);
       reset();
+      toast.success("Task Added", { position: "top-center" });
       onClose();
     } catch (error) {
       toast.success(reset.errorSources[0].message, { position: "top-center" });

@@ -8,6 +8,7 @@ import { TaskFilters as TaskFiltersType } from "@/types/task";
 import EmptyState from "@/components/tasks/EmptyState";
 import TaskCard from "@/components/tasks/TaskCard";
 import CreateTaskModal from "@/components/tasks/CreateTaskModal";
+import { ToastContainer } from "react-toastify";
 
 export default function AllTaskListPage() {
   const [filters, setFilters] = useState<TaskFiltersType>({
@@ -70,6 +71,7 @@ export default function AllTaskListPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ToastContainer />
       {/* Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
