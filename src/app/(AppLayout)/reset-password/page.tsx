@@ -10,6 +10,7 @@ import {
   CheckSquare,
   Settings,
   Database,
+  Loader,
 } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import { resetPasswordSchema } from "@/schemas/resetPassword.schema";
@@ -44,14 +45,14 @@ const ResetPassword = () => {
       toast.success(
         "Password reset successful! You can now log in with your new password.",
         {
-          position: "top-right",
+          position: "top-center",
           autoClose: 4000,
         }
       );
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Password reset failed. Please try again.", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
       });
     }
@@ -143,7 +144,7 @@ const ResetPassword = () => {
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[color:var(--color-neutral-500)] hover:text-[color:var(--color-neutral-700)] transition-colors"
+                  className="absolute right-3 top-1/2 cursor-pointer transform -translate-y-1/2 text-[color:var(--color-neutral-500)] hover:text-[color:var(--color-neutral-700)] transition-colors"
                 >
                   {showNewPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -182,7 +183,7 @@ const ResetPassword = () => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[color:var(--color-neutral-500)] hover:text-[color:var(--color-neutral-700)] transition-colors"
+                  className="absolute right-3 top-1/2 cursor-pointer transform -translate-y-1/2 text-[color:var(--color-neutral-500)] hover:text-[color:var(--color-neutral-700)] transition-colors"
                 >
                   {showConfirmPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -202,9 +203,16 @@ const ResetPassword = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[color:var(--color-brand-500)] text-white py-3 px-4 rounded-lg text-body2 font-semibold hover:bg-[color:var(--color-brand-600)] focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02]"
+              className="w-full cursor-pointer bg-[color:var(--color-brand-500)] text-white py-3 px-4 rounded-lg text-body2 font-semibold hover:bg-[color:var(--color-brand-600)] focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center gap-2"
             >
-              {isSubmitting ? "Resetting Password..." : "Reset Password"}
+              {isSubmitting ? (
+                <>
+                  <Loader className="h-4 w-4 animate-spin" />
+                  Resetting Password...
+                </>
+              ) : (
+                "Reset Password"
+              )}
             </button>
           </form>
 

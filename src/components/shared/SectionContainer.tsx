@@ -19,7 +19,7 @@ const SectionContainer = ({
       {...containerWrapperProps}
     >
       <div
-        className={`flex flex-col mx-auto lg:mt-14 mt-6 px-4 w-full ${
+        className={`flex flex-col mx-auto lg:mt-14 my-6 px-4 w-full ${
           containerInnerProps.className || ""
         }`}
         {...containerInnerProps}

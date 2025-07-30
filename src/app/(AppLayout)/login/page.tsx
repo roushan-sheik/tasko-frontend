@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Eye, EyeOff, CheckSquare, BarChart3, Users } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  CheckSquare,
+  BarChart3,
+  Users,
+  Loader,
+} from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from "@/schemas/login.schema";
 import SectionContainer from "@/components/shared/SectionContainer";
@@ -202,7 +209,7 @@ const LoginPage = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <span className="loader h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <Loader className="h-4 w-4 animate-spin" />
                     Logging in...
                   </>
                 ) : (
