@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, CheckSquare, BarChart3, Users } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from "@/schemas/login.schema";
 import SectionContainer from "@/components/shared/SectionContainer";
 
@@ -33,13 +33,13 @@ const LoginPage = () => {
 
       console.log("Login data:", data);
       toast.success("Login successful! Welcome back.", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
       });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Login failed. Please try again.", {
-        position: "top-right",
+        position: "top-center",
         autoClose: 3000,
       });
     }
@@ -48,6 +48,7 @@ const LoginPage = () => {
   return (
     <SectionContainer>
       <div className=" flex">
+        <ToastContainer />
         {/* Left Side - Illustration */}
         <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[color:var(--color-neutral-800)] to-[color:var(--color-brand-900)] relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-[color:var(--color-brand-900)] to-[color:var(--color-neutral-800)] opacity-90"></div>

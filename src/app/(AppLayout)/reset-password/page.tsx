@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,38 +11,10 @@ import {
   Settings,
   Database,
 } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { resetPasswordSchema } from "@/schemas/resetPassword.schema";
 
 // Validation schema
-const resetPasswordSchema = z
-  .object({
-    email: z
-      .string()
-      .min(1, "Email is required")
-      .email("Please enter a valid email address"),
-    newPassword: z
-      .string()
-      .min(1, "New password is required")
-      .min(8, "Password must be at least 8 characters")
-      .regex(
-        /(?=.*[a-z])/,
-        "Password must contain at least one lowercase letter"
-      )
-      .regex(
-        /(?=.*[A-Z])/,
-        "Password must contain at least one uppercase letter"
-      )
-      .regex(/(?=.*\d)/, "Password must contain at least one number")
-      .regex(
-        /(?=.*[!@#$%^&*])/,
-        "Password must contain at least one special character"
-      ),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
 
 type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 
@@ -75,6 +48,7 @@ const ResetPassword = () => {
           autoClose: 4000,
         }
       );
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error("Password reset failed. Please try again.", {
         position: "top-right",
@@ -85,6 +59,7 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[color:var(--color-brand-900)] to-[color:var(--color-neutral-800)] relative overflow-hidden">
+      <ToastContainer />
       {/* Background Decorations */}
       <div className="absolute top-10 right-10 opacity-20">
         <div className="flex space-x-4">
@@ -105,7 +80,7 @@ const ResetPassword = () => {
 
       {/* Main Content */}
       <div className="flex items-center justify-center min-h-screen p-4">
-        <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 relative">
+        <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-8 relative">
           {/* Header with Icon */}
           <div className="text-center mb-8">
             <div className="bg-[color:var(--color-brand-500)] w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -132,7 +107,7 @@ const ResetPassword = () => {
                 type="email"
                 id="email"
                 placeholder="m32220@gmail.com"
-                className={`w-full px-4 py-3 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
+                className={`w-full px-4 py-3 focus:outline-none rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
                   errors.email
                     ? "border-red-500 bg-red-50"
                     : "border-[color:var(--color-neutral-300)] bg-[color:var(--color-neutral-50)]"
@@ -158,8 +133,8 @@ const ResetPassword = () => {
                   {...register("newPassword")}
                   type={showNewPassword ? "text" : "password"}
                   id="newPassword"
-                  placeholder="••••••••••••••••"
-                  className={`w-full px-4 py-3 pr-12 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
+                  placeholder="New Password"
+                  className={`w-full px-4 focus:outline-none py-3 pr-12 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
                     errors.newPassword
                       ? "border-red-500 bg-red-50"
                       : "border-[color:var(--color-neutral-300)] bg-[color:var(--color-neutral-50)]"
@@ -198,7 +173,7 @@ const ResetPassword = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
                   placeholder="Retype password"
-                  className={`w-full px-4 py-3 pr-12 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
+                  className={`w-full px-4 py-3 pr-12 rounded-lg focus:outline-none border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
                     errors.confirmPassword
                       ? "border-red-500 bg-red-50"
                       : "border-[color:var(--color-neutral-300)] bg-[color:var(--color-neutral-50)]"
