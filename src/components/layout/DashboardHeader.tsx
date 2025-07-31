@@ -9,6 +9,7 @@ import {
   LogOut,
   CheckSquare,
   LoaderPinwheel,
+  ClipboardList,
 } from "lucide-react";
 import Link from "next/link";
 import { useCurrentUser, useLogout } from "@/hooks/useAuth";
@@ -55,13 +56,25 @@ const DashboardHeader = () => {
                 </div>
               </Link>
             </div>
-            {/* Spin Navigation */}
-            <Link href={"/spin-wheel"}>
-              <div className="flex items-center bg-white/10 space-x-2 px-3 py-2 hover:bg-white/30 rounded-lg transition-colors cursor-pointer">
-                <LoaderPinwheel className="text_pri" />
-                <span className="text-white/80 text-sm font-medium">Spin</span>
-              </div>
-            </Link>
+            <div className="flex items-center gap-2">
+              {/* Spin Navigation */}
+              <Link href={"/dashboard"}>
+                <div className="flex items-center bg-white/10 space-x-2 px-3 py-2 hover:bg-white/30 rounded-lg transition-colors cursor-pointer">
+                  <ClipboardList className="text_pri" />
+                  <span className="hidden lg:flex text-white/80 text-sm font-medium">
+                    Task Lists
+                  </span>
+                </div>
+              </Link>
+              <Link href={"/spin-wheel"}>
+                <div className="flex items-center bg-white/10 space-x-2 px-3 py-2 hover:bg-white/30 rounded-lg transition-colors cursor-pointer">
+                  <LoaderPinwheel className="text_pri" />
+                  <span className="text-white/80 text-sm font-medium">
+                    Spin
+                  </span>
+                </div>
+              </Link>
+            </div>
 
             {/* Right Side - Navigation and User */}
             <div className="flex items-center space-x-4">
