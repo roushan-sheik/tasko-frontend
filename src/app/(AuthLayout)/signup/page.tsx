@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 import {
   Eye,
   EyeOff,
@@ -11,8 +12,9 @@ import {
   CheckSquare,
   Loader,
 } from "lucide-react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { signUpSchema } from "@/schemas/signup.schema";
+import { useRegister, useAuth } from "@/hooks/useAuth";
 import SectionContainer from "@/components/shared/SectionContainer";
 
 type SignUpFormData = z.infer<typeof signUpSchema>;
@@ -20,11 +22,15 @@ type SignUpFormData = z.infer<typeof signUpSchema>;
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const registerMutation = useRegister();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
+    reset,
   } = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -35,24 +41,48 @@ const SignUp = () => {
     },
   });
 
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated && !authLoading) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, authLoading, router]);
+
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await registerMutation.mutateAsync({
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+      });
 
-      console.log("Sign up data:", data);
-      toast.success("Account created successfully! Welcome to Tasky.", {
-        position: "top-center",
-        autoClose: 4000,
-      });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // Reset form after successful registration
+      reset();
+
+      // Redirect to login page after successful registration
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
     } catch (error) {
-      toast.error("Sign up failed. Please try again.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      // Error is handled in the mutation
+      console.error("Registration error:", error);
     }
   };
+
+  // Show loading if checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-[color:var(--color-brand-500)]" />
+      </div>
+    );
+  }
+
+  // Don't render if already authenticated
+  if (isAuthenticated) {
+    return null;
+  }
 
   return (
     <SectionContainer>
@@ -154,13 +184,13 @@ const SignUp = () => {
                   htmlFor="email"
                   className="block text-body3 font-medium text-[color:var(--color-neutral-700)] mb-2"
                 >
-                  Email Adders
+                  Email Address
                 </label>
                 <input
                   {...register("email")}
                   type="email"
                   id="email"
-                  placeholder="Enter your email adders"
+                  placeholder="Enter your email address"
                   className={`w-full px-4 focus:outline-none py-3 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
                     errors.email
                       ? "border-red-500 bg-red-50"
@@ -255,10 +285,10 @@ const SignUp = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={registerMutation.isPending}
                 className="w-full cursor-pointer bg-[color:var(--color-brand-500)] text-white py-3 px-4 rounded-lg text-body2 font-semibold hover:bg-[color:var(--color-brand-600)] focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
               >
-                {isSubmitting ? (
+                {registerMutation.isPending ? (
                   <>
                     <Loader className="h-4 w-4 animate-spin" />
                     Creating Account...
