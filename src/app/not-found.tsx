@@ -87,9 +87,9 @@ export default function NotFound() {
             PAGE NOT FOUND
           </p>
           <p className="text-gray-500 text-sm leading-relaxed max-w-sm mx-auto">
-            The page you're looking for seems to have wandered off like our
-            curious cat friend. Don't worry, let's get you back on the right
-            path!
+            The page you&apos;re looking for seems to have wandered off like our
+            curious cat friend. Don&apos;t worry, let&apos;s get you back on the
+            right path!
           </p>
         </div>
 
