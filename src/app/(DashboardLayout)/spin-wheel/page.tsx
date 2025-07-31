@@ -453,7 +453,11 @@ const SpinWheel: React.FC = () => {
                 className="lg:px-18 px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-black rounded-md font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 <span>{isSpinning ? "Spinning..." : "Spin"}</span>
-                <LoaderPinwheel />
+                <LoaderPinwheel
+                  className={`${
+                    isSpinning ? "animate-spin duration-700 ease-linear" : ""
+                  }`}
+                />
               </button>
 
               <button
