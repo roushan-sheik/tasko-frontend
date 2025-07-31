@@ -8,6 +8,7 @@ import {
   User,
   LogOut,
   CheckSquare,
+  LoaderPinwheel,
 } from "lucide-react";
 import Link from "next/link";
 import { useCurrentUser, useLogout } from "@/hooks/useAuth";
@@ -34,18 +35,17 @@ const DashboardHeader = () => {
 
   return (
     <div className="relative min-h-[340px] bg-gradient-to-br from-teal-800 via-gray-950 to-teal-900 overflow-hidden">
-      <header className="w-[1440px] mx-auto">
+      <header className="w-full max-w-[1440px] mx-auto">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
         </div>
 
         {/* Navigation Header */}
-        <nav className="relative z-10 px-4 sm:px-6 lg:p-0">
+        <nav className="relative z-10 px-4 sm:px-6 lg:px-0">
           <div className="flex items-center justify-between py-4">
-            {/* Left Side */}
-            <div className="flex items-center space-x-8">
-              {/* Logo */}
+            {/* Left Side - Logo */}
+            <div className="flex items-center">
               <Link href={"/"}>
                 <div className="flex items-center cursor-pointer space-x-3">
                   <div className="bg-white/40 p-2 rounded-lg shadow-sm">
@@ -54,61 +54,57 @@ const DashboardHeader = () => {
                   <h1 className="text-heading2 font-bold text-white">Tasky</h1>
                 </div>
               </Link>
+            </div>
+            {/* Spin Navigation */}
+            <Link href={"/spin-wheel"}>
+              <div className="flex items-center bg-white/10 space-x-2 px-3 py-2 hover:bg-white/30 rounded-lg transition-colors cursor-pointer">
+                <LoaderPinwheel className="text_pri" />
+                <span className="text-white/80 text-sm font-medium">Spin</span>
+              </div>
+            </Link>
 
-              <nav className="hidden md:flex items-center space-x-6">
-                <div className="flex items-center space-x-2 px-3 py-2 bg-white/15 rounded-lg backdrop-blur-sm border border-white/20">
-                  <List className="w-4 h-4 text-white" />
-                  <span className="text-white text-sm font-medium">
-                    Task List
-                  </span>
-                </div>
-
-                <Link href={"/spin-wheel"}>
-                  <div className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
-                    <RotateCcw className="w-4 h-4 text-white/80" />
-                    <span className="text-white/80 text-sm font-medium">
-                      Spin
+            {/* Right Side - Navigation and User */}
+            <div className="flex items-center space-x-4">
+              {/* User Dropdown */}
+              <div className="relative" ref={dropdownRef}>
+                <div
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center space-x-2 px-3 py-2 bg-white/15 rounded-lg backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#00cc7d] to-teal-800 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {user?.data?.fullName?.[0]}
                     </span>
                   </div>
-                </Link>
-              </nav>
-            </div>
-
-            {/* Right Side - User Dropdown */}
-            <div className="relative" ref={dropdownRef}>
-              <div
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/15 rounded-lg backdrop-blur-sm border border-white/20 cursor-pointer hover:bg-white/20 transition-colors"
-              >
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">
-                    {user?.data?.fullName[0]}
+                  <span className="text-white text-sm font-medium hidden sm:inline-block">
+                    {user?.data?.fullName}
                   </span>
+                  <ChevronDown className="w-4 h-4 text-white/80" />
                 </div>
-                <span className="text-white text-sm font-medium hidden sm:block">
-                  {user?.data?.fullName}
-                </span>
-                <ChevronDown className="w-4 h-4 text-white/80" />
-              </div>
 
-              {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
-                  <Link
-                    href="/profile"
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
-                  >
-                    <User className="w-4 h-4" />
-                    Profile
-                  </Link>
-                  <button
-                    onClick={() => logout()}
-                    className="flex items-center cursor-pointer gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                  </button>
-                </div>
-              )}
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg z-50 overflow-hidden">
+                    <Link
+                      href="/profile"
+                      className="flex items-center gap-2 px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 transition-colors"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <User className="w-4 h-4" />
+                      Profile
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setDropdownOpen(false);
+                      }}
+                      className="flex items-center cursor-pointer gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -143,11 +139,11 @@ const DashboardHeader = () => {
 
         {/* Hero */}
         <div className="mt-10 p-4 lg:p-0">
-          <h4 className=" text_pri font-bold lg:text-2xl text-xl">
+          <h4 className="text_pri font-bold lg:text-2xl text-xl">
             {"Hi "}
             {user?.data?.fullName}
           </h4>
-          <h3 className="text-gray-100 lg:text-4xl text-2xl font-bold  mt-4">
+          <h3 className="text-gray-100 lg:text-4xl text-2xl font-bold mt-4">
             Welcome to Dashboard
           </h3>
         </div>

@@ -178,7 +178,7 @@ const LoginPage = () => {
                       {...register("password")}
                       type={showPassword ? "text" : "password"}
                       id="password"
-                      placeholder="••••••••••••••••"
+                      placeholder="Password"
                       className={`w-full px-4 py-3 focus:outline-none pr-12 rounded-lg border text-body2 focus:ring-2 focus:ring-[color:var(--color-brand-500)] focus:border-transparent transition-colors ${
                         errors.password
                           ? "border-red-500 bg-red-50"
