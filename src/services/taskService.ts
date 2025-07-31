@@ -6,7 +6,8 @@ import {
   TaskFilters,
   UpdateTaskPayload,
   DeleteTaskResponse,
-  CreateTaskPayload, // Add this import
+  CreateTaskPayload,
+  Task, // Add this import
 } from "@/types/task";
 import { config } from "@/config";
 
@@ -51,6 +52,22 @@ export const taskService = {
 
     const { data } = await apiClient.get<TasksResponse>(
       `/tasks?${params.toString()}`
+    );
+    return data;
+  },
+  getSpinWheelTasks: async (
+    category?: string
+  ): Promise<{
+    statusCode: number;
+    success: boolean;
+    message: string;
+    data: Task[];
+  }> => {
+    const params = new URLSearchParams();
+    if (category) params.append("category", category);
+
+    const { data } = await apiClient.get(
+      `/tasks/spin-wheel?${params.toString()}`
     );
     return data;
   },

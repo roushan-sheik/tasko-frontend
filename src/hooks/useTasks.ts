@@ -34,6 +34,14 @@ export const useTasks = (filters: TaskFilters = {}) => {
     staleTime: 5 * 60 * 1000,
   });
 };
+export const useSpinWheelTasks = (category?: string) => {
+  return useQuery({
+    queryKey: ["spin-wheel-tasks", category],
+    queryFn: () => taskService.getSpinWheelTasks(category),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    enabled: !!category, // Only fetch when category is provided
+  });
+};
 
 export const useTask = (id: string) => {
   return useQuery({

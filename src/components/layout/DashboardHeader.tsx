@@ -64,12 +64,14 @@ const DashboardHeader = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
-                  <RotateCcw className="w-4 h-4 text-white/80" />
-                  <span className="text-white/80 text-sm font-medium">
-                    Spin
-                  </span>
-                </div>
+                <Link href={"/spin-wheel"}>
+                  <div className="flex items-center space-x-2 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors cursor-pointer">
+                    <RotateCcw className="w-4 h-4 text-white/80" />
+                    <span className="text-white/80 text-sm font-medium">
+                      Spin
+                    </span>
+                  </div>
+                </Link>
               </nav>
             </div>
 
