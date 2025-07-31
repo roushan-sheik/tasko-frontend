@@ -82,7 +82,7 @@ const SpinWheel: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen rounded-2xl mb-20 bg-gray-50 p-6">
       <div className=" flex justify-between mx-auto">
         {/* Left Header */}
         <h1 className="text-3xl font-bold text-gray-900">Spin Wheel</h1>
@@ -211,7 +211,7 @@ const SpinWheel: React.FC = () => {
             <button
               onClick={spinWheel}
               disabled={isSpinning || isLoading || tasks.length === 0}
-              className="px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="lg:px-18 px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-black rounded-md font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <span>{isSpinning ? "Spinning..." : "Spin"}</span>
               <svg
@@ -232,7 +232,7 @@ const SpinWheel: React.FC = () => {
             <button
               onClick={goToTask}
               disabled={!selectedTask}
-              className="px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+              className="lg:px-18 px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-black rounded-lg font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               Go To Task
             </button>
