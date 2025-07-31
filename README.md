@@ -1,8 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasky app for Task Management
+
+## Production Live Link
+
+Live [https://taskobd.vercel.app](https://taskobd.vercel.app)
 
 ## Getting Started
 
-First, run the development server:
+## Clone the repository
+
+- HTTPS
+
+```bash
+git clone https://github.com/roushan-sheik/tasko-frontend.git
+```
+
+- SSH
+
+```bash
+git clone git@github.com:roushan-sheik/tasko-frontend.git
+```
+
+## Navigate to the directory
+
+```bash
+cd tasko-frontend
+```
+
+## Install all the dependencies
+
+```bash
+npm install
+
+```
+
+## Create a .env file and past the Backend API Base Url
+
+```bash
+touch .env
+
+```
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000/api/v1
+```
+
+### Or add this
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=https://tasko-backend-production.up.railway.app/api/v1
+```
 
 ```bash
 npm run dev
@@ -14,23 +60,74 @@ pnpm dev
 bun dev
 ```
 
+## App is running on this port
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## File and Folder Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+.
+├── app
+│   ├── (AuthLayout)
+│   │   ├── layout.tsx
+│   │   ├── login
+│   │   │   └── page.tsx
+│   │   ├── reset-password
+│   │   │   └── page.tsx
+│   │   └── signup
+│   │       └── page.tsx
+│   ├── (DashboardLayout)
+│   │   ├── dashboard
+│   │   │   ├── [id]
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── profile
+│   │   │   └── page.tsx
+│   │   └── spin-wheel
+│   │       └── page.tsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── not-found.tsx
+│   └── page.tsx
+├── components
+│   ├── layout
+│   │   ├── DashboardHeader.tsx
+│   │   └── Header.tsx
+│   ├── shared
+│   │   └── SectionContainer.tsx
+│   ├── tasks
+│   │   ├── ConfirmationModal.tsx
+│   │   ├── CreateTaskModal.tsx
+│   │   ├── EmptyState.tsx
+│   │   ├── FilterDropdown.tsx
+│   │   ├── StatusDropdown.tsx
+│   │   ├── TaskCard.tsx
+│   │   └── TaskFilters.tsx
+│   └── ui
+├── config
+│   └── index.ts
+├── constants
+├── context
+│   └── AuthContext.tsx
+├── hooks
+│   ├── useAuth.ts
+│   └── useTasks.ts
+├── providers
+│   └── QueryProvider.tsx
+├── schemas
+│   ├── createTask.schema.ts
+│   ├── login.schema.ts
+│   ├── resetPassword.schema.ts
+│   └── signup.schema.ts
+├── services
+│   ├── authService.ts
+│   └── taskService.ts
+└── types
+   ├── authService.ts
+   ├── auth.ts
+   └── task.ts
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
