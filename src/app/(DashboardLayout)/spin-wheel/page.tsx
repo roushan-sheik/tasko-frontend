@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSpinWheelTasks } from "@/hooks/useTasks";
 import { Task } from "@/types/task";
 
-// Define wheel segments with colors exactly matching the Figma design
+// Define wheel segments with colors
 const WHEEL_SEGMENTS = [
   { name: "Friends", color: "#98DF8A", textColor: "#065F46" },
   { name: "Sport", color: "#1F77B4", textColor: "#FFFFFF" },
@@ -52,7 +52,6 @@ const SpinWheel: React.FC = () => {
     error,
   } = useSpinWheelTasks(selectedCategory);
 
-  // Get tasks from the API response
   const tasks = tasksResponse?.data || [];
 
   const handleCategoryChange = (category: string) => {

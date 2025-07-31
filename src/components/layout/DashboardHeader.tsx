@@ -2,12 +2,12 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Clock,
   List,
   RotateCcw,
   ChevronDown,
   User,
   LogOut,
+  CheckSquare,
 } from "lucide-react";
 import Link from "next/link";
 import { useCurrentUser, useLogout } from "@/hooks/useAuth";
@@ -45,14 +45,13 @@ const DashboardHeader = () => {
           <div className="flex items-center justify-between py-4">
             {/* Left Side */}
             <div className="flex items-center space-x-8">
+              {/* Logo */}
               <Link href={"/"}>
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-white" />
+                <div className="flex items-center cursor-pointer space-x-3">
+                  <div className="bg-white/40 p-2 rounded-lg shadow-sm">
+                    <CheckSquare className="h-6 w-6 text-[color:var(--color-brand-500)]" />
                   </div>
-                  <span className="text-white font-semibold text-lg">
-                    Tasko
-                  </span>
+                  <h1 className="text-heading2 font-bold text-white">Tasky</h1>
                 </div>
               </Link>
 
