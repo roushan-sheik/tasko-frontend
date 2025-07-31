@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSpinWheelTasks } from "@/hooks/useTasks";
 import { Task } from "@/types/task";
+import { LoaderPinwheel } from "lucide-react";
 
 // Define wheel segments with colors
 const WHEEL_SEGMENTS = [
@@ -452,19 +453,7 @@ const SpinWheel: React.FC = () => {
                 className="lg:px-18 px-12 py-4 bg-[#60E5AE] cursor-pointer hover:bg-emerald-500 text-black rounded-md font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-3 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
               >
                 <span>{isSpinning ? "Spinning..." : "Spin"}</span>
-                <svg
-                  className={`w-6 h-6 ${isSpinning ? "animate-spin" : ""}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
+                <LoaderPinwheel />
               </button>
 
               <button
